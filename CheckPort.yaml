@@ -1,7 +1,7 @@
 ---  # Playbook start
 
 - name: Check Ports
-  hosts: Routers
+- hosts: Routers
   # ... rest of the tasks
   connection: network_cli
   gather_facts: false
