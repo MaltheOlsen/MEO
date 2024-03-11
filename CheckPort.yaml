@@ -4,11 +4,11 @@ variables:
   interface: "GigaEthernet0/0"  # Replace with your desired interface name
 
 # Play definition
-name: Check Ports
-hosts: Routers
-connection: network_cli
+  name: Check Ports  # Descriptive name for the play
+  hosts: Routers  # Target hosts
+  connection: network_cli  # Connection type
 
-tasks:
+  tasks:
   - name: Check ports
     ios_command:
       commands:
