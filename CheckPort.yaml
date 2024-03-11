@@ -1,26 +1,25 @@
 ---
 - name: Check Cisco Routers
-  hosts: Routers
+  hosts: routers
   gather_facts: no
   vars:
     ansible_connection: ssh
+    interface: "GigaEthernet0/1"  # Erstat med den ønskede grænseflade
 
   tasks:
     - name: Check IP address
-      ios_command:
-        commands:
-          - "show ip interface brief"
+      command:
+        cmd: "show ip interface brief | include {{ interface }}"
       register: ip_check
 
     - name: Check link status
-      ios_command:
-        commands:
-          - "show interface"
+      command:
+        cmd: "show interface {{ interface }}"
       register: link_status
       when: ip_check.stdout_lines | length > 0  # Only check link status if IP address is found
 
     - name: Report interface status
       debug:
-        msg: "Interface {{ item.split()[0] }} on router {{ inventory_hostname }} is {{ 'down' if 'down' in item else 'up' }}"
+        msg: "Interface {{ interface }} on router {{ inventory_hostname }} is {{ 'down' if 'down' in item else 'up' }}"
       loop: "{{ link_status.stdout_lines }}"
       when: ip_check.stdout_lines | length > 0  # Only report if IP address is found
