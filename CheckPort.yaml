@@ -1,9 +1,12 @@
----
+
   variables:
     interface: "FastEthernet0/1"  # Tilpas interfacenavn
   
+---  # Playbook start
+
 - name: Check Ports
   hosts: Routers
+  # ... rest of the tasks
   connection: network_cli
   gather_facts: false
 
