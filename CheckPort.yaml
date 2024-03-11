@@ -3,6 +3,8 @@
   hosts: Routers
   gather_facts: no
   connection: network_cli
+  vars:
+    interface: "GigaEthernet0/0"  # Erstat med den ønskede grænseflade
 
   tasks:
     - name: Check IP address
