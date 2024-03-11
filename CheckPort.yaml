@@ -1,7 +1,5 @@
 ---
 
-variables:
-  interface: "GigaEthernet0/0"
   
 - name: Check Ports 
   hosts: Routers
@@ -38,4 +36,5 @@ variables:
   - name: Send notification if interface is down
     debug:
       msg: "The interface {{ interface }} on the router {{ ansible_hostname }} is down."
-
+    variables:
+      interface: "GigaEthernet0/0"
