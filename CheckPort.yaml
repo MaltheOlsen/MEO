@@ -2,10 +2,9 @@
 variables:
   interface: "GigaEthernet0/0"  
 
-  - name: Check Ports
+- name: Check Ports  # Added space after the hyphen
   hosts: Routers
   connection: network_cli
-  gather_facts: false
 
   tasks:
     - name: Check ports
