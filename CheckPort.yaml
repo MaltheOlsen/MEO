@@ -2,11 +2,11 @@
 variables:
   interface: "GigaEthernet0/0"  
 
-- name: Check Ports
-  hosts: Routers
-  connection: network_cli
+name: Check Ports
+hosts: Routers
+connection: network_cli
 
-  tasks:
+tasks:
     - name: Check ports
       ios_command:
         commands:
