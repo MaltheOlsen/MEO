@@ -1,13 +1,10 @@
----  
-# Playbook start
-
+---
 variables:
-  interface: "GigaEthernet0/0"  # Erstat med dit ønskede interface navn
+  interface: "GigaEthernet0/0"
 
-# Play definition (sørg for korrekt indrykning)
-- name: Check Ports  # Beskrivende navn for playet
-  hosts: Routers  # Målhosts
-  connection: network_cli  # Forbindelsestype
+- name: Check Ports
+  hosts: Routers
+  connection: network_cli
 
   tasks:
     - name: Check ports
@@ -39,5 +36,5 @@ variables:
 
     - name: Send notification if interface is down
       debug:
-        msg: "The interface {{ interface }} on the router {{ ansible_hostname }} is down."  # Dobbelt citat omkring variabel
+        msg: "The interface {{ interface }} on the router {{ ansible_hostname }} is down."
       when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
