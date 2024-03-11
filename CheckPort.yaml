@@ -4,7 +4,7 @@
   gather_facts: no
   vars:
     ansible_connection: ssh
-    interface: "GigaEthernet0/0"  # Erstat med den ønskede grænseflade
+    interface: "GigaEthernet0/1"  # Erstat med den ønskede grænseflade
 
   tasks:
     - name: Check IP address
