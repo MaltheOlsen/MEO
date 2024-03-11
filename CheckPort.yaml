@@ -18,8 +18,13 @@
       register: link_status
       when: ip_check.stdout_lines | length > 0  # Only check link status if IP address is found
 
+    - name: Debug link status output
+      debug:
+        var: link_status
+      when: ip_check.stdout_lines | length > 0  # Only debug if IP address is found
+
     - name: Report interface status
       debug:
-        msg: "Interface {{ interface }} on router {{ inventory_hostname }} is {{ 'down' if 'down' in item else 'up' }}"
+        msg: "Interface {{ interface }} on router {{ inventory_hostname }} is {{ 'down' if 'line protocol is down' in item else 'up' }}"
       loop: "{{ link_status.stdout_lines }}"
       when: ip_check.stdout_lines | length > 0  # Only report if IP address is found
