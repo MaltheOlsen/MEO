@@ -1,37 +1,23 @@
 ---
-- name: Check Ports
+- name: Check Cisco Routers
   hosts: Routers
   connection: network_cli
 
   tasks:
-    - name: Check ports
+    - name: Check IP address
       ios_command:
         commands:
-          - "Show ip interface brief {{ interface }}"
-      register: var_ip_addr
+          - "show ip interface brief | include {{ interface }}"
+      register: ip_check
 
-    - name: Check if IP address is assigned
-      when: var_ip_addr.stdout[0] | length > 0
-      assert:
-        that:
-          - var_ip_addr.stdout[1] | length > 0
-          - var_ip_addr.stdout[1].split()[1] | ipaddr
-
-    - name: Check if interface is up
-      when: var_ip_addr.stdout[0] | length > 0
+    - name: Check link status
       ios_command:
         commands:
-          - "sh int br {{ interface }}"
-      register: var_int_status
+          - "show interface {{ interface }}"
+      register: link_status
+      when: ip_check.stdout | length > 0  # Only check link status if IP address is found
 
-    - name: Assert interface is up
-      when: var_ip_addr.stdout[0] | length > 0
-      assert:
-        that:
-          - var_int_status.stdout[0] | length > 0
-          - var_int_status.stdout[0].split()[0] in ["up", "administratively"]
-
-    - name: Send notification if interface is down
+    - name: Report interface status
       debug:
-        msg: "The interface {{ interface }} on the router {{ ansible_hostname }} is down."
-      when: var_ip_addr.stdout[0] | length > 0 and (var_int_status.stdout[0] | length == 0 or var_int_status.stdout[0].split()[0] not in ["up", "administratively"])
+        msg: "Interface {{ interface }} on router {{ ansible_host }} is {{ 'down' if 'down' in link_status.stdout else 'up' }}"
+      when: ip_check.stdout | length > 0  # Only report if IP address is found
