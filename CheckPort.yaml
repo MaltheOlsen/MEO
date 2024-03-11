@@ -1,43 +1,37 @@
 ---
 
-  
-- name: Check Ports 
+- name: Check Ports
   hosts: Routers
   connection: network_cli
   gather_facts: false
 
   tasks:
-  - name: Check ports
-    ios_command:
-      commands: 
-      - "Show ip interface brief {{ interface }}"
+    - name: Check ports
+      ios_command:
+        commands:
+        - "Show ip interface brief {{ interface }}"
       register: var_ip_addr
-  - name: Check if IP address is assigned
-    when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
-    block:
-    - name: Check if IP address is valid
+    - name: Check if IP address is assigned
+      when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
+      block:
+        - name: Check if IP address is valid
+          assert:
+            that: var_ip_addr.stdout[0].split('\n')[1].split()[1] | ipaddress
+    - name: Check if interface is up
+      when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
+      ios_command:
+        commands:
+        - "sh int br {{ interface }}"
+      register: var_int_status
+    - name: Assert interface is up
+      when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
       assert:
-        that: var_ip_addr.stdout[0].split('\n')[1].split()[1] | ipaddress
-  - name: Check if interface is up
-    when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
-
-    ios_command:
-      commands:
-      - "sh int br {{ interface }}"
-    register: var_int_status
-  - name: Assert interface is up
-    when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
-    assert:
-      that: var_int_status.stdout[0].split('\n')[1].split()[0] in ["up", "administratively up"]
-
-    notify:
+        that: var_int_status.stdout[0].split('\n')[1].split()[0] in ["up", "administratively up"]
+      notify:
         - Send notification if interface is down
-        debug:
-          msg: "{{ notify_message }}"
-        when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
-        
-- name: Define notification message
-  set_fact:
-    notify_message: "The interface {{ interface }} on the router {{ ansible_hostname }} is down."
-  variables:
-    interface: "GigaEthernet0/0"
+
+    # Indentation fix (two spaces)
+    - name: Send notification if interface is down  
+      debug:
+        msg: "{{ notify_message }}"  # Assuming the message is defined earlier
+      when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
