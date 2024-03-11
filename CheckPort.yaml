@@ -1,6 +1,7 @@
 ---
 - name: Check Cisco Routers
   hosts: Routers
+  gather_facts: no
   connection: network_cli
 
   tasks:
@@ -15,9 +16,10 @@
         commands:
           - "show interface {{ interface }}"
       register: link_status
-      when: ip_check.stdout | length > 0  # Only check link status if IP address is found
+      when: ip_check.stdout_lines | length > 0  # Only check link status if IP address is found
 
     - name: Report interface status
       debug:
-        msg: "Interface {{ interface }} on router {{ ansible_host }} is {{ 'down' if 'down' in link_status.stdout else 'up' }}"
-      when: ip_check.stdout | length > 0  # Only report if IP address is found
+        msg: "Interface {{ interface }} on router {{ inventory_hostname }} is {{ 'down' if 'down' in item else 'up' }}"
+      loop: "{{ link_status.stdout_lines }}"
+      when: ip_check.stdout_lines | length > 0  # Only report if IP address is found
