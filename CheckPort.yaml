@@ -35,6 +35,3 @@
     debug:
       msg: "The interface {{ interface }} on the router {{ ansible_hostname }} is down."  # Double quotes around variable
     when: var_ip_addr.stdout[0].split('\n')[1].split()[1] != ""
-
-variables:
-  interface: "GigaEthernet0/0"  # Replace with your desired interface name
