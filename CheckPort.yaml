@@ -4,24 +4,25 @@
   gather_facts: no
   vars:
     ansible_connection: ssh
-    interface: "GigaEthernet0/1"  # Erstat med den ønskede grænseflade
 
   tasks:
-    - name: Check IP address
+    - name: Check IP address for all interfaces
       ios_command:
         commands:
-          - "show ip interface brief | include {{ interface }}"
+          - "show ip interface brief"
       register: ip_check
 
-    - name: Check link status
+    - name: Extract interface information
+      set_fact:
+        interface_info: "{{ ip_check.stdout[0] | regex_findall('([A-Za-z]+[0-9]+/[0-9]+)') }}"
+
+    - name: Check link status for all interfaces
       ios_command:
-        commands:
-          - "show interface {{ interface }}"
+        commands: "show interface {{ item }}"
       register: link_status
-      when: ip_check.stdout_lines | length > 0  # Only check link status if IP address is found
+      loop: "{{ interface_info }}"
 
     - name: Report interface status
       debug:
-        msg: "Interface {{ interface }} on router {{ inventory_hostname }} is {{ 'down' if 'down' in item else 'up' }}"
-      loop: "{{ link_status.stdout_lines }}"
-      when: ip_check.stdout_lines | length > 0  # Only report if IP address is found
+        msg: "Interface {{ item.0 }} on router {{ inventory_hostname }} is {{ 'down' if 'down' in item.1 else 'up' }}"
+      loop: "{{ link_status.results | zip(interface_info) }}"
