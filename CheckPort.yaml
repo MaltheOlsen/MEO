@@ -1,6 +1,6 @@
 ---
 - name: Check Cisco Routers
-  hosts: routers
+  hosts: Routers
   gather_facts: no
   vars:
     ansible_connection: ssh
