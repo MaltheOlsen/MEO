@@ -1,7 +1,4 @@
 ---
-variables:
-  interface: "GigaEthernet0/0"
-
 - name: Check Ports
   hosts: Routers
   connection: network_cli
