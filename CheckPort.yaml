@@ -1,7 +1,12 @@
 ---  # Playbook start
 
+# Define variables here
+variables:
+  interface: "FastEthernet0/1"
+
+# Play definition
 - name: Check Ports
-- hosts: Routers
+  hosts: Routers
   # ... rest of the tasks
   connection: network_cli
   gather_facts: false
@@ -37,5 +42,3 @@
     debug:
       msg: "The interface {{ interface }} on the router {{ ansible_hostname }} is down."
 
-  variables:
-    interface: "FastEthernet0/1"  # Tilpas interfacenavn
