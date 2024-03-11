@@ -1,13 +1,7 @@
----  # Playbook start
+---
 
-# Define variables here
-variables:
-  interface: "FastEthernet0/1"
-
-# Play definition
-- name: Check Ports
+- name: Check Ports 
   hosts: Routers
-  # ... rest of the tasks
   connection: network_cli
   gather_facts: false
 
