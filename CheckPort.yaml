@@ -32,7 +32,6 @@ variables:
       notify:
         - Send notification if interface is down
 
-    # Indentation fix (two spaces)
     - name: Send notification if interface is down  
       debug:
         msg: "{{ notify_message }}"  # Assuming the message is defined earlier
