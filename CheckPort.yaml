@@ -1,5 +1,7 @@
 ---
-
+  variables:
+    interface: "FastEthernet0/1"  # Tilpas interfacenavn
+  
 - name: Check Ports
   hosts: Routers
   connection: network_cli
@@ -35,6 +37,4 @@
     debug:
       msg: "The interface {{ interface }} on the router {{ ansible_hostname }} is down."
 
-  variables:
-    interface: "FastEthernet0/1"  # Tilpas interfacenavn
-  
+
