@@ -1,0 +1,16 @@
+---
+- ansible_become: true
+- ansible_become_method: enable
+- hosts: all
+  gather_facts: no
+
+- name: Disable domain lookup
+  cisco.ios.ios_system:
+    lookup_enabled: false
+
+  handlers:
+    - name: save ios
+      ios_command:
+        commands: "write mem"
+        timeout: 40
+      when: not ansible_check_mode

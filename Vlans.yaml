@@ -1,0 +1,25 @@
+---
+- ansible_become: true
+- ansible_become_method: enable
+- hosts: switches
+  gather_facts: no
+
+- name: Merge provided configuration with device configuration
+  cisco.ios.ios_vlans:
+    config:
+      - name: Vlan250
+        vlan_id: 250
+        state: active
+        shutdown: disabled
+      - name: Vlan260
+        vlan_id: 260
+        state: active
+        shutdown: disabled
+    state: merged
+
+  handlers:
+    - name: save ios
+      ios_command:
+        commands: "write mem"
+        timeout: 40
+      when: not ansible_check_mode
