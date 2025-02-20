@@ -14,8 +14,9 @@
       register: ip_check
 
     - name: Check link status
-      commands:
-        cmd: "show interface {{ interface }}"
+      cisco.ios.ios_command:
+        commands:
+          - "show interface {{ interface }}"
       register: link_status
       when: ip_check.stdout_lines | length > 0  # Only check link status if IP address is found
 
