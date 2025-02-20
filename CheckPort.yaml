@@ -8,7 +8,7 @@
 
   tasks:
     - name: Check IP address
-      cisco.ios.ios_command:
+      ios_command:
         commands:
           -  "show ip interface brief | include {{ interface }}"
       register: ip_check
