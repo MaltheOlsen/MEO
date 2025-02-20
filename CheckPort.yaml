@@ -9,7 +9,7 @@
   tasks:
     - name: Check IP address
       command:
-        cmd: "show ip interface brief | include {{ interface }}"
+        -  "show ip interface brief | include {{ interface }}"
       register: ip_check
 
     - name: Check link status
