@@ -8,8 +8,9 @@
 
   tasks:
     - name: Check IP address
-      commands:
-        -  "show ip interface brief | include {{ interface }}"
+      cisco.ios.ios_command:
+        commands:
+          -  "show ip interface brief | include {{ interface }}"
       register: ip_check
 
     - name: Check link status
