@@ -8,12 +8,12 @@
 
   tasks:
     - name: Check IP address
-      command:
+      commands:
         -  "show ip interface brief | include {{ interface }}"
       register: ip_check
 
     - name: Check link status
-      command:
+      commands:
         cmd: "show interface {{ interface }}"
       register: link_status
       when: ip_check.stdout_lines | length > 0  # Only check link status if IP address is found
