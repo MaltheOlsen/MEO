@@ -1,0 +1,41 @@
+- terminal length 0
+          - terminal width 200
+          - show license status
+      become: true
+
+    - name: Debug connection
+      debug:
+        msg: "Connecting to {{ inventory_hostname }}"
+
+    - name: Check device state
+      cisco.ios.ios_command:
+        commands:
+          - show privilege
+      register: device_state
+
+    - name: Debug device state
+      debug:
+        var: device_state
+
+    - name: Interface Status
+      cisco.ios.ios_facts:
+        gather_subset:
+          - "!all"
+          - "!min"
+        gather_network_resources:
+          - interfaces
+      register: command_output
+
+    - name: Display formatted output
+      debug:
+        var: command_output
+
+    - name: Run show ip interface brief command
+      cisco.ios.ios_command:
+        commands:
+          - show ip interface brief
+      register: show_interface_output
+
+    - name: Debug show ip interface brief output
+      debug:
+        var: show_interface_output
