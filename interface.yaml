@@ -19,7 +19,6 @@
         commands:
           - terminal length 0
           - terminal width 200
-          - show license status
       become: true
 
     - name: Debug connection
