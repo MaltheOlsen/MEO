@@ -8,7 +8,7 @@
     ansible_connection: network_cli
     ansible_user: admin
     ansible_network_os: cisco.ios.ios
-    interface: "GigaEthernet0/1"  # Erstat med den ønskede grænseflade
+    interface: "GigaEthernet0/1"
     ansible_become: true
     ansible_become_method: enable
     ansible_become_password: "cisco"
