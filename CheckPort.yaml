@@ -14,6 +14,13 @@
     ansible_become_password: "cisco"
     
   tasks:
+      - name: Start
+      ios_command:
+        commands:
+          - terminal length 0
+          - terminal width 200
+      become: true
+      
     - name: Check IP address
       ios_command:
         commands:
