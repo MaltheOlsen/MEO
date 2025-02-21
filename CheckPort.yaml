@@ -21,7 +21,7 @@
       register: ip_check
 
     - name: Check link status
-      cisco.ios.ios_command:
+      ios_command:
         commands:
           - "show interface {{ interface }}"
       register: link_status
