@@ -11,6 +11,7 @@
     interface: "GigaEthernet0/1"  # Erstat med den ønskede grænseflade
     ansible_become: true
     ansible_become_method: enable
+    ansible_become_password: "cisco"
     
   tasks:
     - name: Check IP address
