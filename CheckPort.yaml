@@ -23,7 +23,8 @@
     - name: Check link status
       ios_command:
         commands:
-          - "show interface {{ interface }}"
+#          - "show interface {{ interface }}"
+          - show interface GigaEthernet0/1
       register: link_status
       when: ip_check.stdout_lines | length > 0  # Only check link status if IP address is found
 
