@@ -6,10 +6,10 @@
     - ansible_become: true
     - ansible_become_method: enable
 
-
-- name: Disable domain lookup
-  cisco.ios.ios_system:
-    lookup_enabled: false
+  tasks:
+    - name: Disable domain lookup
+        cisco.ios.ios_system:
+          lookup_enabled: false
 
   handlers:
     - name: save ios
