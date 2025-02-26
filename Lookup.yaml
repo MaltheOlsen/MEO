@@ -2,7 +2,7 @@
 - name: START
   - hosts: all
   gather_facts: no
-  - vars:
+  vars:
     - ansible_become: true
     - ansible_become_method: enable
 
