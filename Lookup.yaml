@@ -18,6 +18,7 @@
 #  handlers:
     - name: save ios
       ios_command:
-        commands: "write mem"
+        commands: 
+          - "write mem"
         timeout: 40
       when: not ansible_check_mode
