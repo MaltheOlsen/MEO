@@ -20,5 +20,4 @@
       ios_command:
         commands: 
           - "write mem"
-        timeout: 40
       when: not ansible_check_mode
