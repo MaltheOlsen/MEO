@@ -11,9 +11,9 @@
     ansible_become_password: "cisco"
 
   tasks:
-    - name: Disable domain lookup
-        cisco.ios.ios_system: 
-        - lookup_enabled: false
+#    - name: Disable domain lookup
+ #       cisco.ios.ios_system: 
+  #      - lookup_enabled: false
 
 #  handlers:
     - name: save ios
