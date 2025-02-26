@@ -8,7 +8,7 @@
     ansible_connection: network_cli
     ansible_user: admin
     ansible_network_os: cisco.ios.ios
-    interface: "GigaEthernet0/1"
+    interface: "GigabitEthernet0/1"
     ansible_become: true
     ansible_become_method: enable
     ansible_become_password: "cisco"
@@ -23,7 +23,7 @@
     - name: Check link status
       ios_command:
         commands:
-          - "show interface"
+          - "show interface {{ interface }}"
       register: link_status
       when: ip_check.stdout_lines | length > 0  # Only check link status if IP address is found
 
