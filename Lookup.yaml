@@ -15,7 +15,7 @@
         cisco.ios.ios_system:
           lookup_enabled: false
 
-  handlers:
+#  handlers:
     - name: save ios
       ios_command:
         commands: "write mem"
