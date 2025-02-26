@@ -13,7 +13,7 @@
   tasks:
     - name: Disable domain lookup
         cisco.ios.ios_system: 
-        - lookup_enabled: false
+        #- lookup_enabled: false
 
 #  handlers:
     - name: save ios
