@@ -1,6 +1,11 @@
 ---
-- name: Ping alle hosts i inventory
+- name: Ping alle hosts via SSH
   hosts: all
   tasks:
-    - name: Ping test
-      ping:
+    - name: Ping test via SSH
+      command: ssh -o BatchMode=yes -o ConnectTimeout=5 {{ ansible_user }}@{{ ansible_host }} echo "Ping succes"
+      register: ping_result
+
+    - name: Vis ping-resultater
+      debug:
+        var: ping_result.stdout
