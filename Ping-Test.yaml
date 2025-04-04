@@ -1,0 +1,6 @@
+---
+- name: Ping alle hosts i inventory
+  hosts: all
+  tasks:
+    - name: Ping test
+      ping:
