@@ -1,6 +1,6 @@
 ---
 - name: Update and upgrade servers
-  hosts: servere
+  hosts: Server
   become: yes
   tasks:
     - name: Update apt cache
