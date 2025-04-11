@@ -5,4 +5,4 @@
   tasks:
     - name: Push matching configuration file to Cisco devices
       ansible.netcommon.cli_config:
-        src: "/path/to/configs/{{ inventory_hostname }}.cfg"
+        src: "/etc/semaphore/itsupport/config_files/{{ inventory_hostname }}.cfg"
