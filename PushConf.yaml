@@ -1,0 +1,8 @@
+---
+- name: Deploy matching configuration to Cisco devices
+  hosts: cisco_devices
+  gather_facts: no
+  tasks:
+    - name: Push matching configuration file to Cisco devices
+      ansible.netcommon.cli_config:
+        src: "/path/to/configs/{{ inventory_hostname }}.cfg"
