@@ -3,6 +3,11 @@
   hosts: cisco_devices
   gather_facts: no
   tasks:
-    - name: Push matching configuration file to Cisco devices
-      ansible.netcommon.cli_config:
+    - name: Read configuration file
+      slurp:
         src: "/etc/semaphore/itsupport/config_files/{{ inventory_hostname }}.cfg"
+      register: file_content
+
+    - name: Push configuration to Cisco devices
+      ansible.netcommon.cli_config:
+        config: "{{ file_content.content | b64decode }}"
